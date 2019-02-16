@@ -1,68 +1,116 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+### Insight People Management System
+* Commercial Rate: 5
+* Hardness Rate: 5
 
-### `npm start`
+#### System Includes
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Time & Attendance Mangement
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Performance Management
 
-### `npm test`
+Shift Shceduling
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Time Tracker
 
-### `npm run build`
+Time-off Management
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### UI Design (Reference)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+![add-leave](Insight-People-Management-System/add-leave.png)
+- Add Leave
+  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Site Structure
 
-### `npm run eject`
+- Settings
+	- Organization
+		- departments
+		- locations
+		- staff
+		- Holiday Calendar
+	- Employee
+		- Users
+		- Employee profiles
+	- Notification
+		- Workflows
+		- Mail Alerts
+		- Scheduler
+	- Approvals
+- Time Tracker
+	- Log Time
+	- List roaster
+		- List by Calender
+		- List by table
+- Leave Tracker
+	- Leave List
+	- Add Leave
+- Organization
+	- Department
+		- Assign Department Lead
+	- Employee
+		- Employee(List all employee)
+		- Directory(List all employee by directory)
+	- Company Policy
+	- Announcements
+- My Approvals
+	- My Approvals
+	- My Requests
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Features
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+##### Update company profiles
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**description**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+AS a Admin
 
-## Learn More
+I WANT to modify the profile of the company
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+SO THAT I'm able to change the company profile any time
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**attributes (reference)**
+- Email ID
+- Current Locale
+- Name
+- Phone
+- Address
 
-### Code Splitting
+##### Apply for leave
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+**description**
 
-### Analyzing the Bundle Size
+AS a Staff
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+I WANT to apply for a leave
 
-### Making a Progressive Web App
+SO THAT I'm able to change the company profile any time
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+**attributes (reference)**
 
-### Advanced Configuration
+- Leave type
+- Duration
+	- Full Day
+	- Multiple Days
+	- Part Day 
+- Start Date
+- Details
+- Sent to (Supvervisor)
+- Message
+- Submit
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+##### Approve leave
 
-### Deployment
+**description**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+AS a Admin
 
-### `npm run build` fails to minify
+I WANT to approve for a leave
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+SO THAT I'm able to change the company profile any time
+
+**attributes (reference)**
+- User id
+- Who approved
