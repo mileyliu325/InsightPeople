@@ -21,7 +21,8 @@ Time-off Management
 
 ![add-leave](https://raw.githubusercontent.com/australiaitgroup/jr-full-stack-projects/master/Insight-People-Management-System/add-leave.png)
 - Add Leave
-  
+![add-approval](https://raw.githubusercontent.com/australiaitgroup/jr-full-stack-projects/master/Insight-People-Management-System/add-approvals.png)
+- Add Approval
 
 #### Site Structure
 
