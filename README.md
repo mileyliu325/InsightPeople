@@ -19,7 +19,7 @@ Time-off Management
 
 #### UI Design (Reference)
 
-![add-leave](Insight-People-Management-System/add-leave.png)
+![add-leave](https://raw.githubusercontent.com/australiaitgroup/jr-full-stack-projects/master/Insight-People-Management-System/add-leave.png)
 - Add Leave
   
 
