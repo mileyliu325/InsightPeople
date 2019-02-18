@@ -87,7 +87,7 @@ AS a Staff
 
 I WANT to apply for a leave
 
-~~SO THAT I'm able to change the company profile any time~~(don't do taht)
+~~SO THAT I'm able to change the company profile any time~~(don't do that)
 
 **attributes (reference)**
 
