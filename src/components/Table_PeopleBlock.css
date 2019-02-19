@@ -5,13 +5,14 @@
     align-items: center;
     justify-content: center;
     border:solid 2px;
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px;
     border-color: black
 }
 
 .portrait {
     width:50px;
     height: 50px;
+    border-radius: 50%;
     margin:10px; 
 }
 
