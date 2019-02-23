@@ -1,9 +1,19 @@
 import React from 'react'
+import TextField from '@material-ui/core/TextField';
 
-class ScheduleComponent_shift extends React.Component{
+import Table_PeopleBlock from './Table_PeopleBlock'
+
+class Table_ShiftDialog extends React.Component{
     render(){
-        return
+        return(
+            <div>
+                <Table_PeopleBlock people={this.props.shift.people} />
+                <TextField id="title" label="title" fullWidth={true}/>
+                <TextField id="start_time" label="start time" fullWidth={true}/>
+                <TextField id="end_time" label="end time" fullWidth={true}/>
+            </div>
+        )
     }
 }
 
-export default ScheduleComponent_shift
+export default Table_ShiftDialog

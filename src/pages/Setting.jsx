@@ -14,7 +14,6 @@ class Setting extends Component {
         <Table_PeopleBlock people={people_1} />
         <Table_PeopleBlock people={people_2} />
         <Table_PeopleBlock people={people_3} />
-        <Table_ShiftBlock shift={null} />
         <Table_ShiftBlock shift={shift_1} />
         <Table_ShiftBlock shift={shift_2} />
         <Table_ShiftBlock shift={shift_3} />
