@@ -1,0 +1,33 @@
+.people_block {
+    width:200px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border:solid 2px;
+    border-radius: 5px;
+    border-color: black
+}
+
+.portrait {
+    width:50px;
+    height: 50px;
+    border-radius: 50%;
+    margin:10px; 
+}
+
+.info_block {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+}
+
+.name_span{
+    color:blue;
+}
+
+.name_span:hover {
+    cursor:pointer
+}

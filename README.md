@@ -19,9 +19,10 @@ Time-off Management
 
 #### UI Design (Reference)
 
-![add-leave](Insight-People-Management-System/add-leave.png)
+![add-leave](https://raw.githubusercontent.com/australiaitgroup/jr-full-stack-projects/master/Insight-People-Management-System/add-leave.png)
 - Add Leave
-  
+![add-approval](https://raw.githubusercontent.com/australiaitgroup/jr-full-stack-projects/master/Insight-People-Management-System/add-approvals.png)
+- Add Approval
 
 #### Site Structure
 
@@ -86,7 +87,7 @@ AS a Staff
 
 I WANT to apply for a leave
 
-SO THAT I'm able to change the company profile any time
+~~SO THAT I'm able to change the company profile any time~~(don't do that)
 
 **attributes (reference)**
 

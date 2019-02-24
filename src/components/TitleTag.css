@@ -1,0 +1,20 @@
+.admin_tag {
+    color:white;
+    border-radius: 5px 5px 5px 5px;
+    padding:2px;
+    background-color:red;
+}
+
+.leader_tag {
+    color:white;
+    border-radius: 5px 5px 5px 5px;
+    padding:2px;
+    background-color: blueviolet;
+}
+
+.staff_tag {
+    color:white;
+    border-radius: 5px 5px 5px 5px;
+    padding:2px;
+    background-color: cadetblue;
+}
