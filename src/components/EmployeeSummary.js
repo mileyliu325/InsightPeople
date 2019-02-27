@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Avatar, Button, Icon } from "@material-ui/core";
 class EmployeeSummary extends Component {
   constructor(props) {
     super();
@@ -35,7 +34,6 @@ const Container = styled.div`
 const AvatarContainer = styled.div`
   width: 50px;
   height: 50px;
-  /* background-color: black; */
   border-radius: 50px;
   margin-bottom: 10px;
 `;

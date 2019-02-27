@@ -1,31 +1,32 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import {
+  Dialog,
+  Button,
+  Icon,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl
+} from "@material-ui/core";
 import EmployeeSummary from "./EmployeeSummary";
 import EmployeeCard from "./EmployeeCard";
-import EmployeeItem from "./EmployeeItem";
-
-import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
 import PeopleBlock from "../components/Table_PeopleBlock";
-
 import { people_1 } from "../mockdata/people";
-
 class EmployeeDialog extends Component {
   constructor(props) {
     super();
-    this.state = {};
+    this.state = { value: "detail" };
     console.log("props.employeeId:" + props.employeeId);
   }
   state = {
     open: false
   };
-  handleClickOpen = () => {
-    this.setState({ open: true, selecetedEmployeeId: "0001" });
-    console.log(this.state.selecetedEmployeeId);
-  };
-
   handleClose = () => {
     this.setState({ open: false });
+  };
+  handleChange = event => {
+    this.setState({ value: event.target.value });
   };
 
   render() {
@@ -53,19 +54,37 @@ class EmployeeDialog extends Component {
                 position={"Sales Manager"}
                 avatar={people_1.portrait}
               />
-              {/* todo: menu */}
-              <Button color="primary">Personal Detail</Button>
-              <Button>Shifts</Button>
+              <LeftNavContainer>
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                  >
+                    <FormControlLabel
+                      value="detail"
+                      control={<Radio color="primary" />}
+                      label="Personal Detail"
+                    />
+                    <FormControlLabel
+                      value="shifts"
+                      control={<Radio color="primary" />}
+                      label="Shifts"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </LeftNavContainer>
             </SummaryContainer>
+
             <DetailContainer>
               <TitleContainer>
-                <Button onClick={this.handleClose}>X</Button>
+                <Button onClick={this.handleClose}>
+                  <Icon>close</Icon>
+                </Button>
                 <Button variant="contained" size="small" color="primary">
                   Edit Profile
                 </Button>
               </TitleContainer>
-
-              <EmployeeCard />
+              <EmployeeCard type={this.state.value} />
             </DetailContainer>
           </DialogContanier>
         </Dialog>
@@ -80,7 +99,7 @@ const DialogContanier = styled.div`
   flex-direction: row;
   padding: 0px;
   width: 600px;
-  height: 500px;
+  height: 100%;
   background-color: #f1f1f1;
 `;
 
@@ -102,8 +121,6 @@ const TitleContainer = styled.div`
   justify-content: right;
   flex-direction: row-reverse;
 `;
-const leftNavContainer = styled.div``;
-const ShiftContanier = styled.div`
-  font: 11;
-  color: gray;
+const LeftNavContainer = styled.div`
+  padding-left: 20px;
 `;
