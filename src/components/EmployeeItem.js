@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import { Avatar, Button, Icon } from "@material-ui/core";
+
+import { Button, Input, Icon } from "@material-ui/core";
 class EmployeeItem extends Component {
   constructor(props) {
     super();
@@ -17,7 +16,11 @@ class EmployeeItem extends Component {
         <IconContainer>
           <Icon>{icon}</Icon>
         </IconContainer>
-        <Button color="primary">{content}</Button>
+        <Input
+          color="primary"
+          onChange={() => this.setState({ content })}
+          placeholder={content}
+        />
       </ItemContainer>
     );
   }

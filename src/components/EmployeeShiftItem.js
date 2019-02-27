@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import { Button, Icon } from "@material-ui/core";
+import { Icon } from "@material-ui/core";
 
 class EmployeeShiftItem extends Component {
   constructor(props) {

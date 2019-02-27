@@ -80,9 +80,12 @@ class EmployeeDialog extends Component {
                 <Button onClick={this.handleClose}>
                   <Icon>close</Icon>
                 </Button>
-                <Button variant="contained" size="small" color="primary">
-                  Edit Profile
-                </Button>
+
+                {this.state.value === "detail" && (
+                  <Button variant="contained" size="small" color="primary">
+                    Save
+                  </Button>
+                )}
               </TitleContainer>
               <EmployeeCard type={this.state.value} />
             </DetailContainer>
