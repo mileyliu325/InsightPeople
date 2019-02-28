@@ -22,7 +22,6 @@ class EmployeeShiftItem extends Component {
           <p>{date}</p>
         </DateContainer>
         <p>{time}</p>
-
         <p>{location}</p>
       </Container>
     );

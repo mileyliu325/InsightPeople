@@ -12,7 +12,27 @@ import {
 import EmployeeSummary from "./EmployeeSummary";
 import EmployeeCard from "./EmployeeCard";
 import PeopleBlock from "../components/Table_PeopleBlock";
-import { people_1 } from "../mockdata/people";
+import { people_1, people_2, people_3 } from "../mockdata/people";
+const peoplelist = [
+  people_1,
+  people_2,
+  people_3,
+  people_1,
+  people_2,
+  people_3,
+  people_1,
+  people_2,
+  people_3,
+  people_1,
+  people_2,
+  people_3,
+  people_1,
+  people_2,
+  people_3,
+  people_1,
+  people_2,
+  people_3
+];
 class EmployeeDialog extends Component {
   constructor(props) {
     super();
@@ -31,6 +51,8 @@ class EmployeeDialog extends Component {
 
   render() {
     const id = this.props.employeeId;
+    const employee = peoplelist[id];
+    console.log("id from schedule is:" + id);
 
     return (
       <div>
@@ -38,7 +60,7 @@ class EmployeeDialog extends Component {
           color="primary"
           onClick={() => this.setState({ open: true, selecetedEmployeeId: id })}
         >
-          <PeopleBlock people={people_1} />
+          <PeopleBlock people={employee} />
         </Button>
 
         <Dialog
@@ -50,9 +72,9 @@ class EmployeeDialog extends Component {
           <DialogContanier>
             <SummaryContainer>
               <EmployeeSummary
-                name={people_1.name}
+                name={employee.name}
                 position={"Sales Manager"}
-                avatar={people_1.portrait}
+                avatar={employee.portrait}
               />
               <LeftNavContainer>
                 <FormControl component="fieldset">
