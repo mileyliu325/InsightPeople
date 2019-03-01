@@ -55,7 +55,7 @@ function Navbar(props) {
         const handleClose = () => {
           updateAnchorEl(null);
         };
-
+        // need to fix cover of sub menu
         return (
           <MuiThemeProvider theme={blueDream}>
             <AppBar color="primary" position="static" title="Brand">
@@ -106,7 +106,7 @@ function Navbar(props) {
                   </Menu>
                   <Button
                     className={classes.tabButton}
-                    label="Leave"
+                    label="Approval"
                     aria-owns={open ? "render-props-menu" : undefined}
                     aria-haspopup="true"
                     onClick={event => {
