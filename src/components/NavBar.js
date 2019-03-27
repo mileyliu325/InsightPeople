@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import AppBar from "@material-ui/core/AppBar";
 //import MainPage from "./MainPage";
 import Button from "@material-ui/core/Button";
 import { Link, BrowserRouter as Router } from "react-router-dom";
 import Toolbar from "@material-ui/core/Toolbar";
-import withState from "recompose/withState";
-import toRenderProps from "recompose/toRenderProps";
+//import withState from "recompose/withState";
+//import toRenderProps from "recompose/toRenderProps";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
@@ -14,6 +14,7 @@ import { createMuiTheme, withTheme } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import { NONAME } from "dns";
 
 //overall theme color and etc.
 const blueDream = createMuiTheme({
@@ -34,7 +35,9 @@ const blueDream = createMuiTheme({
 });
 
 const styles = {
+  buttonWrapper: { display: "inline-block" },
   navButtons: {
+    display: "inline-block",
     marginLeft: 20
   },
   tabButton: {
@@ -44,118 +47,116 @@ const styles = {
     color: "black"
   }
 };
-const WithState = toRenderProps(withState("anchorEl", "updateAnchorEl", null));
 
-function Navbar(props) {
-  const { classes } = props;
-  return (
-    <WithState>
-      {({ anchorEl, updateAnchorEl }) => {
-        const open = Boolean(anchorEl);
-        const handleClose = () => {
-          updateAnchorEl(null);
-        };
-        // need to fix cover of sub menu
-        return (
-          <MuiThemeProvider theme={blueDream}>
-            <AppBar color="primary" position="static" title="Brand">
-              <Toolbar>
-                <h1>Insight People</h1>
-                <div className={classes.navButtons}>
-                  <Button label="Schedule">
-                    <Link to="/schedule" replace>
-                      Schedule
-                    </Link>
-                  </Button>
-                  <Button
-                    className={classes.tabButton}
-                    label="Leave"
-                    aria-owns={open ? "render-props-menu" : undefined}
-                    aria-haspopup="true"
-                    onClick={event => {
-                      updateAnchorEl(event.currentTarget);
-                    }}
-                  >
-                    Leave Tracker
-                  </Button>
-                  <Menu
-                    id="render-props-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleClose}>
-                      {/* replace */}
-                      <Link
-                        style={styles.dropMenu}
-                        to="/leave/leaveList"
-                        replace
-                      >
-                        Leave List
-                      </Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <Link
-                        style={styles.dropMenu}
-                        to="/leave/addLeave"
-                        replace
-                      >
-                        Add Leave
-                      </Link>
-                    </MenuItem>
-                  </Menu>
-                  <Button
-                    className={classes.tabButton}
-                    label="Approval"
-                    aria-owns={open ? "render-props-menu" : undefined}
-                    aria-haspopup="true"
-                    onClick={event => {
-                      updateAnchorEl(event.currentTarget);
-                    }}
-                  >
-                    My Approvals
-                  </Button>
-                  <Menu
-                    id="render-props-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleClose}>
-                      {/* replace */}
-                      <Link
-                        style={styles.dropMenu}
-                        to="/approval/myApprovals"
-                        replace
-                      >
-                        My Approvals
-                      </Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <Link
-                        style={styles.dropMenu}
-                        to="/approval/myRequests"
-                        replace
-                      >
-                        My Requests
-                      </Link>
-                    </MenuItem>
-                  </Menu>
-                  <Button label="Settings">
-                    <Link to="/settings" replace>
-                      Settings
-                    </Link>
-                  </Button>
-                </div>
-              </Toolbar>
-            </AppBar>
-          </MuiThemeProvider>
-        );
-      }}
-    </WithState>
-  );
+class NavBar extends Component {
+  state = { auth: true, anchorElLv: null, anchorElAprv: null };
+
+  handleLeaveMenuOpen = event => {
+    this.setState({ anchorElLv: event.currentTarget });
+  };
+  handleApprovalMenuOpen = event => {
+    this.setState({ anchorElAprv: event.currentTarget });
+  };
+  handleMenuClose = event => {
+    this.setState({ anchorElLv: null, anchorElAprv: null });
+  };
+  render() {
+    const { anchorElLv, anchorElAprv } = this.state;
+    const { classes } = this.props;
+    const isMenuOpenLv = Boolean(anchorElLv);
+    const isMenuOpenAprv = Boolean(anchorElAprv);
+    const renderLeaveMenu = (
+      <React.Fragment>
+        <Button
+          className={classes.tabButton}
+          label="Leave"
+          aria-owns={isMenuOpenLv ? "render-props-menu" : undefined}
+          aria-haspopup="true"
+          onClick={this.handleLeaveMenuOpen}
+        >
+          Leave Tracker
+        </Button>
+        <Menu
+          anchorEl={anchorElLv}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={isMenuOpenLv}
+          onClose={this.handleMenuClose}
+        >
+          <MenuItem onClick={this.handleMenuClose}>
+            <Link style={styles.dropMenu} to="/leave/leaveList" replace>
+              Leave List
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleMenuClose}>
+            <Link style={styles.dropMenu} to="/leave/addLeave" replace>
+              Add Leave
+            </Link>
+          </MenuItem>
+        </Menu>
+      </React.Fragment>
+    );
+
+    const renderApprovalMenu = (
+      <React.Fragment>
+        <Button
+          className={classes.tabButton}
+          label="Approval"
+          aria-owns={isMenuOpenAprv ? "render-props-menu" : undefined}
+          aria-haspopup="true"
+          onClick={this.handleApprovalMenuOpen}
+        >
+          Approvals
+        </Button>
+        <Menu
+          anchorEl={anchorElAprv}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={isMenuOpenAprv}
+          onClose={this.handleMenuClose}
+        >
+          <MenuItem onClick={this.andleMenuClose}>
+            <Link style={styles.dropMenu} to="/approval/myApprovals" replace>
+              My Approvals
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleMenuClose}>
+            <Link style={styles.dropMenu} to="/approval/myRequests" replace>
+              My Requests
+            </Link>
+          </MenuItem>
+        </Menu>
+      </React.Fragment>
+    );
+    return (
+      <MuiThemeProvider theme={blueDream}>
+        <AppBar color="primary" position="static" title="Brand">
+          <Toolbar>
+            <h1>Insight People</h1>
+            <div className={classes.navButtons}>
+              <Button label="Schedule">
+                <Link to="/schedule" replace>
+                  Schedule
+                </Link>
+              </Button>
+
+              {renderLeaveMenu}
+              {renderApprovalMenu}
+
+              <Button label="Settings">
+                <Link to="/settings" replace>
+                  Settings
+                </Link>
+              </Button>
+            </div>
+          </Toolbar>
+        </AppBar>
+      </MuiThemeProvider>
+    );
+  }
 }
-Navbar.propTypes = {
+
+NavBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default withStyles(styles)(Navbar);
+export default withStyles(styles)(NavBar);
