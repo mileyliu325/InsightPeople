@@ -1,0 +1,316 @@
+openapi: 3.0.0
+info:
+  title: Insight People Managment System
+  description: Insight People Managment System
+  todo: add header
+  version: 1.0.0
+paths:
+  /people/{id}:
+    get:
+      summary: return a person
+      description: return a person.
+      tags:
+        - People
+      parameters:
+        - name: id
+          in: path
+          description: id of the person
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A person
+          content:
+            application/json:
+              schema:
+                type: object
+        "404": # status code
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object 
+    put:
+      summary: update a person
+      description: update a person.
+      tags:
+        - People
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                role:
+                  type: string
+                wage: 
+                  type: string
+                phone:
+                  type: string,
+                birthday: 
+                  type: date,
+                shifts:
+                  type: array          
+        in: path
+        schema:
+          type: string
+      responses:
+        "200": # status code
+          description: person update successfully
+          content:
+            application/json:
+              schema:
+                type: object  
+        "404": # status code
+          description: shift not found
+          content:
+            application/json:
+              schema:
+                type: object    
+        
+    delete:
+      summary: delete a person
+      description: delete a person.
+      tags:
+        - People
+      parameters:
+        - name: id
+          in: path
+          description: id of the person
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: delete person sucessfully
+          content:
+            application/json:
+              schema:
+                type: object
+        "404": # status code
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object 
+        
+  /people:
+    get:
+      summary: return a list of people
+      description: return a list of people.
+      tags:
+        - People
+      responses:
+        "200": # status code
+          description: A people list
+          content:
+            application/json:
+              schema:
+                type: array
+        "404": # status code
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object 
+    post:
+      summary: create a person
+      description: create a person.
+      tags:
+        - People
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                 type: string
+                role:
+                  type: string
+                wage: 
+                  type: string
+                phone:
+                  type: string
+                birthday: 
+                  type: date,
+                shifts:
+                  type: array          
+        in: path
+        schema:
+          type: string
+      responses:
+        "201": # status code
+          description: A person
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /shifts/{id}:
+    get:
+      summary: return a shift
+      description: return a shift.
+      tags:
+        - Shifts
+      parameters:
+        - name: id
+          in: path
+          description: id of the shift
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A Shift detail
+          content:
+            application/json:
+              schema:
+                type: object
+        "404": # status code
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object 
+    put:
+      summary: update a shift
+      description: update a shift.
+      tags:
+        - Shifts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                peopleId:
+                 type: string
+                date:
+                  type: date
+                startTime: 
+                  type: string
+                endTime:
+                  type: string,
+                position: 
+                  type: string,
+                location:
+                  type: string          
+        in: path
+        schema:
+          type: string
+      responses:
+        "200": # status code
+          description: shift update successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        "404": # status code
+          description: shift not found
+          content:
+            application/json:
+              schema:
+                type: object 
+    delete:
+      summary: delete a shift
+      description: delete a shift.
+      tags:
+        - Shifts
+      parameters:
+        - name: id
+          in: path
+          description: id of the shift
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: delete shift sucessfully
+          content:
+            application/json:
+              schema:
+                type: object
+        "404": # status code
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object 
+
+  /shifts:
+    summary: return a list of shift by query
+    description: return a list of shift by query
+    get:
+      tags:
+        - Shifts
+      parameters:
+        - in: query
+          name: personId
+          schema:
+            type: string
+          description: return a person's shift list
+        - in: query
+          name: date
+          schema:
+            type: date
+          description: return a date's shift list
+      responses:
+        "200": # status code
+          description: a shift list
+          content:
+            application/json:
+              schema:
+                type: array
+        "404": # status code
+          description: no shift
+          content:
+            application/json:
+              schema:
+                type: object   
+  
+  /schedule:
+    summary: return all shifts by date duration
+    description: return all shifts by date duration
+    get:
+      tags:
+        - Schedule
+      parameters:
+        - in: query
+          name: startDate
+          schema:
+            type: date
+          description: the start date 
+        - in: query
+          name: endDate
+          schema:
+            type: date
+          description: the end date
+      responses:
+        "200": # status code
+          description: return all shifts of that date by people array
+          content:
+            application/json:
+              schema:
+                type: array
+        "404": # status code
+          description: no shift found
+          content:
+            application/json:
+              schema:
+                type: object  
+
+
+
+
+
+
+
+
+
+
