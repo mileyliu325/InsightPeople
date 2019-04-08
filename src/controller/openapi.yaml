@@ -1,40 +1,100 @@
 openapi: 3.0.0
 info:
-  title: Insight People Managment System
-  description: Insight People Managment System
-  todo: add header
+  title: Ivy School API Docs
+  description: Ivy School API Docs...
   version: 1.0.0
 paths:
   /people/{id}:
     get:
-      summary: return a person
-      description: return a person.
+      summary: Returns a person.
+      description: Returns a person...
       tags:
         - People
       parameters:
         - name: id
           in: path
-          description: id of the person
+          description: id of the person.
           schema:
             type: string
       responses:
         "200": # status code
-          description: A person
+          description: a person.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400": # status code
+          description: Invalid id.
           content:
             application/json:
               schema:
                 type: object
         "404": # status code
-          description: not found
+          description: not found.
           content:
             application/json:
               schema:
-                type: object 
-    put:
-      summary: update a person
-      description: update a person.
+                type: object
+    delete:
+      summary: delete a person.
+      description: delete a person...
       tags:
         - People
+      parameters:
+        - name: id
+          in: path
+          description: id of the person.
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A person.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400": # status code
+          description: Invalid id.
+          content:
+            application/json:
+              schema:
+                type: object
+        "404": # status code
+          description: not found.
+          content:
+            application/json:
+              schema:
+                type: object
+    put:
+      summary: update a person.
+      description: update a person...
+      tags:
+        - People
+      parameters:
+        - name: id
+          in: path
+          description: id of the person.
+          schema:
+            type: string
+      responses:
+        "400": # status code
+          description: invalid id.
+          content:
+            application/json:
+              schema:
+                type: object
+        "200": # status code
+          description: A person.
+          content:
+            application/json:
+              schema:
+                type: object
+        "201": # status code
+          description: A person.
+          content:
+            application/json:
+              schema:
+                type: object
       requestBody:
         content:
           application/json:
@@ -54,73 +114,20 @@ paths:
                 birthday: 
                   type: date,
                 shifts:
-                  type: array          
-        in: path
-        schema:
-          type: string
-      responses:
-        "200": # status code
-          description: person update successfully
-          content:
-            application/json:
-              schema:
-                type: object  
-        "404": # status code
-          description: shift not found
-          content:
-            application/json:
-              schema:
-                type: object    
-        
-    delete:
-      summary: delete a person
-      description: delete a person.
+                  type: array   
+  /people:
+    post:
+      summary: Create a person.
+      description: Create a person...
       tags:
         - People
-      parameters:
-        - name: id
-          in: path
-          description: id of the person
-          schema:
-            type: string
       responses:
-        "200": # status code
-          description: delete person sucessfully
+        "201": # status code
+          description: A person.
           content:
             application/json:
               schema:
                 type: object
-        "404": # status code
-          description: not found
-          content:
-            application/json:
-              schema:
-                type: object 
-        
-  /people:
-    get:
-      summary: return a list of people
-      description: return a list of people.
-      tags:
-        - People
-      responses:
-        "200": # status code
-          description: A people list
-          content:
-            application/json:
-              schema:
-                type: array
-        "404": # status code
-          description: not found
-          content:
-            application/json:
-              schema:
-                type: object 
-    post:
-      summary: create a person
-      description: create a person.
-      tags:
-        - People
       requestBody:
         content:
           application/json:
@@ -129,59 +136,142 @@ paths:
               properties:
                 name:
                   type: string
-                email:
-                 type: string
-                role:
+                title:
                   type: string
-                wage: 
+                content:
                   type: string
-                phone:
+                criteria:
                   type: string
-                birthday: 
-                  type: date,
-                shifts:
-                  type: array          
-        in: path
-        schema:
-          type: string
+                belongTo:
+                  type: string
+                details: 
+                  type: object
+  /bulk/people/{ids}:
+    get:
+      summary: Returns people by ids.
+      description: Returns persons by ids...
+      tags:
+        - Bulk people
+      parameters:
+        - name: ids
+          in: path
+          description: ids of the people. It should look like `5ca45de909520ac243514afa,5ca45de909520ac243514aff`
+          schema:
+            type: array
+              items:
+                type: string
       responses:
-        "201": # status code
-          description: A person
+        "200": # status code
+          description: List of people.
           content:
             application/json:
               schema:
-                type: object
-
-  /shifts/{id}:
-    get:
-      summary: return a shift
-      description: return a shift.
-      tags:
-        - Shifts
-      parameters:
-        - name: id
-          in: path
-          description: id of the shift
-          schema:
-            type: string
-      responses:
-        "200": # status code
-          description: A Shift detail
+                type: array
+                items:
+                  type: string
+        "400": # status code
+          description: Invalid ids.
           content:
             application/json:
               schema:
                 type: object
         "404": # status code
-          description: not found
+          description: all ids not found.
           content:
             application/json:
               schema:
-                type: object 
-    put:
-      summary: update a shift
-      description: update a shift.
+                type: object  
+  /task/{id}:
+    get:
+      summary: Returns a task.
+      description: Returns a task...
       tags:
-        - Shifts
+        - Tasks
+      parameters:
+        - name: id
+          in: path
+          description: id of the task.
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: a task.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400": # status code
+          description: Invalid id.
+          content:
+            application/json:
+              schema:
+                type: object
+        "404": # status code
+          description: not found.
+          content:
+            application/json:
+              schema:
+                type: object
+    delete:
+      summary: delete a task.
+      description: delete a task...
+      tags:
+        - Tasks
+      parameters:
+        - name: id
+          in: path
+          description: id of the task.
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A task.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400": # status code
+          description: Invalid id.
+          content:
+            application/json:
+              schema:
+                type: object
+        "404": # status code
+          description: not found.
+          content:
+            application/json:
+              schema:
+                type: object
+    put:
+      summary: update a task.
+      description: update a task...
+      tags:
+        - Tasks
+      parameters:
+        - name: id
+          in: path
+          description: id of the task.
+          schema:
+            type: string
+      responses:
+        "400": # status code
+          description: invalid id.
+          content:
+            application/json:
+              schema:
+                type: object
+        "200": # status code
+          description: A task.
+          content:
+            application/json:
+              schema:
+                type: object
+        "201": # status code
+          description: A task.
+          content:
+            application/json:
+              schema:
+                type: object
       requestBody:
         content:
           application/json:
@@ -190,127 +280,71 @@ paths:
               properties:
                 title:
                   type: string
-                peopleId:
-                 type: string
-                date:
-                  type: date
-                startTime: 
+                postPerson:
                   type: string
-                endTime:
-                  type: string,
-                position: 
-                  type: string,
-                location:
-                  type: string          
-        in: path
-        schema:
-          type: string
+                assignTo:
+                  type: array
+                dueDate: 
+                  type: date  
+  /task:
+    post:
+      summary: Create a task.
+      description: Create a task...
+      tags:
+        - Tasks
       responses:
-        "200": # status code
-          description: shift update successfully
+        "201": # status code
+          description: A Task.
           content:
             application/json:
               schema:
                 type: object
-        "404": # status code
-          description: shift not found
-          content:
-            application/json:
-              schema:
-                type: object 
-    delete:
-      summary: delete a shift
-      description: delete a shift.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                postPerson:
+                  type: string
+                assignTo:
+                  type: array
+                dueDate: 
+                  type: date 
+  /bulk/tasks/{ids}:
+    get:
+      summary: Returns tasks by ids.
+      description: Returns tasks by ids...
       tags:
-        - Shifts
+        - Bulk tasks
       parameters:
-        - name: id
+        - name: ids
           in: path
-          description: id of the shift
+          description: ids of the tasks. It should look like `5ca45de909520ac243514afa,5ca45de909520ac243514aff`
           schema:
-            type: string
+            type: array
+              items:
+                type: string
       responses:
         "200": # status code
-          description: delete shift sucessfully
+          description: List of tasks.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "400": # status code
+          description: Invalid ids.
           content:
             application/json:
               schema:
                 type: object
         "404": # status code
-          description: not found
+          description: all ids not found.
           content:
             application/json:
               schema:
                 type: object 
-
-  /shifts:
-    summary: return a list of shift by query
-    description: return a list of shift by query
-    get:
-      tags:
-        - Shifts
-      parameters:
-        - in: query
-          name: personId
-          schema:
-            type: string
-          description: return a person's shift list
-        - in: query
-          name: date
-          schema:
-            type: date
-          description: return a date's shift list
-      responses:
-        "200": # status code
-          description: a shift list
-          content:
-            application/json:
-              schema:
-                type: array
-        "404": # status code
-          description: no shift
-          content:
-            application/json:
-              schema:
-                type: object   
-  
-  /schedule:
-    summary: return all shifts by date duration
-    description: return all shifts by date duration
-    get:
-      tags:
-        - Schedule
-      parameters:
-        - in: query
-          name: startDate
-          schema:
-            type: date
-          description: the start date 
-        - in: query
-          name: endDate
-          schema:
-            type: date
-          description: the end date
-      responses:
-        "200": # status code
-          description: return all shifts of that date by people array
-          content:
-            application/json:
-              schema:
-                type: array
-        "404": # status code
-          description: no shift found
-          content:
-            application/json:
-              schema:
-                type: object  
-
-
-
-
-
-
-
-
-
-
