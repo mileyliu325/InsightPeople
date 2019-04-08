@@ -7,9 +7,9 @@ const PeopleSchema = new Schema({
   email: String,
   role: String,
   phone: String,
-  wage: String,
-  birthday: Date,
-  shifts: Array
+  wage: String
+  // birthday: Date,
+  // shifts: Array
 });
 
 const peopleModel = mongoose.model("people", PeopleSchema);

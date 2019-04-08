@@ -111,10 +111,10 @@ paths:
                   type: string
                 phone:
                   type: string
-                birthday: 
-                  type: date,
-                shifts:
-                  type: array   
+                # birthday: 
+                #   type: date,
+                # shifts:
+                #   type: array   
   /people:
     post:
       summary: Create a person.
@@ -144,10 +144,10 @@ paths:
                   type: string
                 phone:
                   type: string
-                birthday: 
-                  type: date
-                shifts:
-                  type: array   
+                # birthday: 
+                #   type: string
+                # shifts:
+                #   type: string   
   /bulk/people/{ids}:
     get:
       summary: Returns people by ids.
@@ -284,10 +284,10 @@ paths:
                   type: string
                 postPerson:
                   type: string
-                assignTo:
-                  type: array
-                dueDate: 
-                  type: date  
+                # assignTo:
+                #   type: array
+                # dueDate: 
+                #   type: date  
   /task:
     post:
       summary: Create a task.
@@ -311,10 +311,10 @@ paths:
                   type: string
                 postPerson:
                   type: string
-                assignTo:
-                  type: array
-                dueDate: 
-                  type: date 
+                # assignTo:
+                #   type: array
+                # dueDate: 
+                #   type: date 
   /bulk/task/{ids}:
     get:
       summary: Returns tasks by ids.
