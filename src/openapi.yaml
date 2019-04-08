@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Ivy School API Docs
-  description: Ivy School API Docs...
+  title: Insight People managment API Docs
+  description: Insight People managment API Docs...
   version: 1.0.0
 paths:
   /people/{id}:
@@ -110,7 +110,7 @@ paths:
                 wage: 
                   type: string
                 phone:
-                  type: string,
+                  type: string
                 birthday: 
                   type: date,
                 shifts:
@@ -136,16 +136,18 @@ paths:
               properties:
                 name:
                   type: string
-                title:
+                email:
                   type: string
-                content:
+                role:
                   type: string
-                criteria:
+                wage: 
                   type: string
-                belongTo:
+                phone:
                   type: string
-                details: 
-                  type: object
+                birthday: 
+                  type: date
+                shifts:
+                  type: array   
   /bulk/people/{ids}:
     get:
       summary: Returns people by ids.
@@ -313,7 +315,7 @@ paths:
                   type: array
                 dueDate: 
                   type: date 
-  /bulk/tasks/{ids}:
+  /bulk/task/{ids}:
     get:
       summary: Returns tasks by ids.
       description: Returns tasks by ids...

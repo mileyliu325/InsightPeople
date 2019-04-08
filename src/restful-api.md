@@ -3,13 +3,9 @@
 ##People
 
 - GET
-
 /people/:id
 
-/people
-
 - POST
-
 /people
 
 Body:
@@ -24,7 +20,6 @@ Body:
 }
 
 - PUT
-
 /people/:id
 
 Body:
@@ -35,54 +30,41 @@ Body:
     wage:"",
     phone:"",
     birthday:"",
-    shifts:[]  
-}
+    shifts:[]}
 
 - DELETE
-
 /people/:id
 
-##Shift
+## Bulk People
+/bulk/people/:ids
+
+## Tasks
 
 - GET
-/shift/:id
-
-/shift
-
-query:personalId OR date
+/task/:id
 
 - POST
-/shift
+/task
 
 Body {
     title:"",
-    peopleId:"",
-    date:"",
-    startTime:"",
-    endTime:"",
-    position:"",
-    location:"" 
+    postPerson:"",
+    assignTo:[],
+    dueDate: ""
 }
 
 - PUT
-/shift/:id
-Body {
+/task/:id
 
+Body {
     title:"",
-    peopleId:"",
-    startTime:"",
-    endTime:"",
-    position:"",
-    location:"", 
+    postPerson:"",
+    assignTo:[],
 }
 
 - DELETE
-/shift/:id
+/task/:id
 
-##Schedule
-
-- GET
-/schedule
-
-query: fromDate AND toDate
+## Bulk Tasks
+/bulk/task/:ids
 
