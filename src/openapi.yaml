@@ -293,7 +293,7 @@ paths:
       summary: Create a task.
       description: Create a task...
       tags:
-        - Task
+        - Tasks
       responses:
         "201": # status code
           description: A Task.
