@@ -105,16 +105,28 @@ paths:
                   type: string
                 email:
                   type: string
+                  format: email
                 role:
                   type: string
                 wage: 
                   type: string
                 phone:
                   type: string
-                # birthday: 
-                #   type: date,
-                # shifts:
-                #   type: array   
+                birthday: 
+                  type: string
+                shifts:
+                  type: array 
+                  items:
+                    type: object
+                    properties:
+                      startTime:
+                        type: string
+                      endTime:
+                        type: string
+                      taskId:
+                        type: string
+                      area:
+                        type: string
   /people:
     post:
       summary: Create a person.
@@ -132,22 +144,35 @@ paths:
         content:
           application/json:
             schema:
+              # User:
               type: object
               properties:
                 name:
                   type: string
                 email:
                   type: string
+                  format: email
                 role:
                   type: string
                 wage: 
                   type: string
                 phone:
                   type: string
-                # birthday: 
-                #   type: string
-                # shifts:
-                #   type: string   
+                birthday: 
+                  type: string
+                shifts:
+                  type: array 
+                  items:
+                    type: object
+                    properties:
+                      startTime: 
+                        type: string
+                      endTime: 
+                        type: string
+                      taskId: 
+                        type: string
+                      area:
+                        type: string 
   /bulk/people/{ids}:
     get:
       summary: Returns people by ids.
@@ -284,10 +309,10 @@ paths:
                   type: string
                 postPerson:
                   type: string
-                # assignTo:
-                #   type: array
-                # dueDate: 
-                #   type: date  
+                assignTo:
+                  type: array
+                dueDate: 
+                  type: string  
   /task:
     post:
       summary: Create a task.
@@ -311,10 +336,12 @@ paths:
                   type: string
                 postPerson:
                   type: string
-                # assignTo:
-                #   type: array
-                # dueDate: 
-                #   type: date 
+                assignTo:
+                  type: array 
+                    items:
+                      type: string 
+                dueDate: 
+                  type: string 
   /bulk/task/{ids}:
     get:
       summary: Returns tasks by ids.

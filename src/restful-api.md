@@ -8,29 +8,44 @@
 - POST
 /people
 
-Body:
-{
-    name:"",
-    email:"",
-    role:"",
-    wage:"",
-    phone:"",
-    birthday:"",
-    shifts:[]
-}
+    request body:
+    {
+        name:"",
+        email:"",
+        role:"",
+        wage:"",
+        phone:"",
+        birthday:"",
+        shifts:[
+            {
+                startTime: Date,
+                endTime: String,
+                taskId: String
+            },
+            ....
+        ]
+    }
 
 - PUT
 /people/:id
 
-Body:
-{
-    name:"",
-    email:"",
-    role:"", 
-    wage:"",
-    phone:"",
-    birthday:"",
-    shifts:[]}
+    request Body:
+    {
+        name:"",
+        email:"",
+        role:"", 
+        wage:"",
+        phone:"",
+        birthday:"",
+        shifts:[
+            {
+                startTime: Date,
+                endTime: String,
+                taskId: String
+            },
+            ....
+        ]
+    }
 
 - DELETE
 /people/:id
@@ -46,21 +61,21 @@ Body:
 - POST
 /task
 
-Body {
-    title:"",
-    postPerson:"",
-    assignTo:[],
-    dueDate: ""
-}
+    request body {
+        title:"",
+        postPerson:"",
+        assignTo:[],
+        dueDate: ""
+    }
 
 - PUT
 /task/:id
 
-Body {
-    title:"",
-    postPerson:"",
-    assignTo:[],
-}
+    request body {
+        title:"",
+        postPerson:"",
+        assignTo:[],
+    }
 
 - DELETE
 /task/:id
