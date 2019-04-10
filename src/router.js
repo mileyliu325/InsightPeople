@@ -21,20 +21,20 @@ const peopleBulkGet = require("./controller/people/bulk/get");
 // bulk people restful apis
 router.get("/bulk/people/:ids", peopleBulkGet);
 
-// const taskGet = require("./controller/tasks/single/get");
-// const taskCreate = require("./controller/tasks/single/create");
-// const taskUpdate = require("./controller/tasks/single/update");
-// const taskDelete = require("./controller/tasks/single/delete");
+const taskGet = require("./controller/tasks/single/get");
+const taskCreate = require("./controller/tasks/single/create");
+const taskUpdate = require("./controller/tasks/single/update");
+const taskDelete = require("./controller/tasks/single/delete");
 
-// // single task restful apis
-// router.get("/task/:id", taskGet);
-// router.post("/task", taskCreate);
-// router.put("/task/:id", taskUpdate);
-// router.delete("/task/:id", taskDelete);
+// single task restful apis
+router.get("/task/:id", taskGet);
+router.post("/task", taskCreate);
+router.put("/task/:id", taskUpdate);
+router.delete("/task/:id", taskDelete);
 
-// const tasksBulkGet = require("./controller/tasks/bulk/get");
+const tasksBulkGet = require("./controller/tasks/bulk/get");
 
-// // bulk tasks restful apis
-// router.get("/bulk/task/:ids", tasksBulkGet);
+// bulk tasks restful apis
+router.get("/bulk/task/:ids", tasksBulkGet);
 
 module.exports = router;

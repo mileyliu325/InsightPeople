@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
-//assignTo: people's array
+//assignTo:  people's ids
 const TaskSchema = new Schema({
   postPerson: String,
-  title: String
-  // assignTo: Array,
-  // dueDate: Date
+  title: String,
+  assignTo: [String],
+  dueDate: String
 });
 
 const taskModel = mongoose.model("task", TaskSchema);

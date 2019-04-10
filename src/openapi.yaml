@@ -105,6 +105,7 @@ paths:
                   type: string
                 email:
                   type: string
+                  format: email
                 role:
                   type: string
                 wage: 
@@ -112,9 +113,20 @@ paths:
                 phone:
                   type: string
                 birthday: 
-                  type: date,
+                  type: string
                 shifts:
-                  type: array   
+                  type: array 
+                  items:
+                    type: object
+                    properties:
+                      startTime:
+                        type: string
+                      endTime:
+                        type: string
+                      taskId:
+                        type: string
+                      area:
+                        type: string
   /people:
     post:
       summary: Create a person.
@@ -132,12 +144,14 @@ paths:
         content:
           application/json:
             schema:
+              # User:
               type: object
               properties:
                 name:
                   type: string
                 email:
                   type: string
+                  format: email
                 role:
                   type: string
                 wage: 
@@ -145,9 +159,20 @@ paths:
                 phone:
                   type: string
                 birthday: 
-                  type: date
+                  type: string
                 shifts:
-                  type: array   
+                  type: array 
+                  items:
+                    type: object
+                    properties:
+                      startTime: 
+                        type: string
+                      endTime: 
+                        type: string
+                      taskId: 
+                        type: string
+                      area:
+                        type: string 
   /bulk/people/{ids}:
     get:
       summary: Returns people by ids.
@@ -287,7 +312,7 @@ paths:
                 assignTo:
                   type: array
                 dueDate: 
-                  type: date  
+                  type: string  
   /task:
     post:
       summary: Create a task.
@@ -312,9 +337,11 @@ paths:
                 postPerson:
                   type: string
                 assignTo:
-                  type: array
+                  type: array 
+                    items:
+                      type: string 
                 dueDate: 
-                  type: date 
+                  type: string 
   /bulk/task/{ids}:
     get:
       summary: Returns tasks by ids.
