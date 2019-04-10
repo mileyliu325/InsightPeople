@@ -14,7 +14,7 @@ import Schedule from "../pages/Schedule.jsx";
 import Leave from "./Leave";
 import SignIn from "../pages/SignInPage";
 import Approval from "./Approval";
-
+import LogInPage from "../pages/LoginPage";
 import NoMatch from "../pages/NoMatch";
 
 const SignInContainer = () => (
@@ -29,7 +29,8 @@ const StaffOnlyContainer = () => (
   <div>
     <NavBar />
     <Switch>
-      <Route path="/" component={Schedule} />
+      <Route exact path="/" component={Schedule} />
+      <Route path="/login" component={LogInPage} />
       <Route path="/schedule" component={Schedule} />
       <Route path="/leave" component={Leave} />
       <Route path="/approval" component={Approval} />
