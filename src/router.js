@@ -17,9 +17,12 @@ router.put("/people/:id", personUpdate);
 router.delete("/people/:id", personDelete);
 
 const peopleBulkGet = require("./controller/people/bulk/get");
+const peopleList = require("./controller/people/bulk/getall");
 
 // bulk people restful apis
 router.get("/bulk/people/:ids", peopleBulkGet);
+//all people
+router.get("/bulk/people", peopleList);
 
 const taskGet = require("./controller/tasks/single/get");
 const taskCreate = require("./controller/tasks/single/create");

@@ -119,6 +119,8 @@ paths:
                   items:
                     type: object
                     properties:
+                      _id:
+                        type: string
                       startTime:
                         type: string
                       endTime:
@@ -165,6 +167,8 @@ paths:
                   items:
                     type: object
                     properties:
+                      _id:
+                        type: string
                       startTime: 
                         type: string
                       endTime: 
@@ -204,6 +208,27 @@ paths:
                 type: object
         "404": # status code
           description: all ids not found.
+          content:
+            application/json:
+              schema:
+                type: object  
+  /bulk/people:
+    get:
+      summary: Returns people list.
+      description: Returns persons by ids...
+      tags:
+        - Bulk people
+      responses:
+        "200": # status code
+          description: List of people.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "404": # status code
+          description: no people found.
           content:
             application/json:
               schema:
