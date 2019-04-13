@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import axios from 'axios';
 import styles from "react-virtualized/styles.css";
 import { Column, Table, MultiGrid } from "react-virtualized";
 import EmployeeDialog from "../components/EmployeeDialog";
@@ -9,6 +10,9 @@ import moment from "moment";
 // import List from 'react-virtualized/dist/commonjs/List';
 
 import { shift_1, shift_2, shift_3 } from "../mockdata/shift";
+const HOST = "http://127.0.0.1:3002/bulk/users";
+
+const names = [];
 
 const shiftlist = [
   shift_1,
@@ -24,6 +28,7 @@ const shiftlist = [
   shift_2,
   shift_3
 ];
+const ROW_COUNT = 10;
 const STYLE = {
   border: "1px solid #ddd",
   paddingTop: "10px"
@@ -42,10 +47,14 @@ const STYLE_TOP_RIGHT_GRID = {
   fontWeight: "bold"
 };
 
+
 class Schedule extends Component {
+  // static contextTypes = {
+  //   list: PropTypes.instanceOf(Immutable.List).isRequired,
+  // };
   constructor(props, context) {
     super(props, context);
-
+    
     this.state = {
       fixedColumnCount: 1,
       fixedRowCount: 1,
@@ -63,12 +72,23 @@ class Schedule extends Component {
   }
 
   _cellRenderer({ columnIndex, key, rowIndex, style }) {
-    console.log();
+    const data = this.state.data;
+    // console.log("cellrender:"+data);
     return (
+     
       <div className={styles.Cell} key={key} style={style}>
-        {columnIndex === 0 && rowIndex !== 0 && (
-          <EmployeeDialog employeeId={rowIndex} />
+        {columnIndex === 0 && rowIndex !== 0 && data && (
+          // <div>person:{rowIndex}: {peoplelist[rowIndex]}</div>
+          // <EmployeeDialog  rowIndex={rowIndex} name= {names[rowIndex]}/>
+          // <div>{data[rowIndex-1].name},{data[rowIndex-1].name}</div>
+          < EmployeeDialog employee ={data[rowIndex-1]}/>
         )}
+
+       {/* {columnIndex === 0 && rowIndex !== 0 && data && data.length<10 &&(
+          // <div>person:{rowIndex}: {peoplelist[rowIndex]}</div>
+          // <EmployeeDialog  rowIndex={rowIndex} name= {names[rowIndex]}/>
+          <div>{rowIndex}</div>
+        )}   */}
         {/* todo:date */}
         {rowIndex === 0 && columnIndex !== 0 && (
           <div>
@@ -77,14 +97,15 @@ class Schedule extends Component {
               .format("ll")}
           </div>
         )}
-        {/* todo:shifts combine with people */}
+         {/* todo:shifts combine with people */}
+        
         {rowIndex !== 0 && columnIndex !== 0 && (
-          <ShiftBlock shift={shiftlist[rowIndex]} />
+          // <ShiftBlock shift={shiftlist[rowIndex]} />
+         <div> {rowIndex},{columnIndex}</div>
         )}
       </div>
     );
   }
-
   _createEventHandler(property) {
     return event => {
       const value = parseInt(event.target.value, 10) || 0;
@@ -95,8 +116,25 @@ class Schedule extends Component {
     };
   }
 
+  fetchPeople = async () => {
+    console.log("fetchdata....");
+    axios
+      .get("http://127.0.0.1:3002/bulk/users")
+      .then(res => {
+        const data = res.data;
+        this.setState({data: data});
+        this.setState({rowCount: data.length })
+      })
+      .catch(err => {
+        console.warn("fetchPeopleErrpr", err);
+      });
+  };
+
+
   render() {
+
     return (
+      
       <AutoSizer disableHeight>
         {({ width }) => (
           <MultiGrid
@@ -108,7 +146,7 @@ class Schedule extends Component {
             enableFixedRowScroll
             height={650}
             rowHeight={80}
-            rowCount={10}
+            rowCount={5}
             style={STYLE}
             styleBottomLeftGrid={STYLE_BOTTOM_LEFT_GRID}
             styleTopLeftGrid={STYLE_TOP_LEFT_GRID}
@@ -121,6 +159,12 @@ class Schedule extends Component {
       </AutoSizer>
     );
   }
+
+  
+componentDidMount(){
+  this.fetchPeople();
+}
+  
 }
 
 export default Schedule;
