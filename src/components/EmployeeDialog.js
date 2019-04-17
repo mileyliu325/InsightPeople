@@ -18,7 +18,6 @@ class EmployeeDialog extends Component {
   constructor(props) {
     super(props);
     this.state = { value: "detail" };
-    // this.setState({ data: props.employee });
     console.log("propsname:" + props.employee);
   }
   state = {
@@ -30,19 +29,7 @@ class EmployeeDialog extends Component {
   handleChange = event => {
     this.setState({ value: event.target.value });
   };
-
   render() {
-    // const index = this.props.rowIndex;
-    // const people = peoplelist[index];
-
-    // const employee = {
-    //   people_id: "0001",
-    //   name: "Putin",
-
-    //   hours: "30",
-    //   cost: "500.00"
-    // };
-
     return (
       <div>
         {this.props.employee && this.props.employee.name && (

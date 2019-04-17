@@ -10,9 +10,10 @@ import moment from "moment";
 // import List from 'react-virtualized/dist/commonjs/List';
 
 import { shift_1, shift_2, shift_3 } from "../mockdata/shift";
+import { array } from "prop-types";
 const HOST = "http://127.0.0.1:3002/bulk/users";
 
-const names = [];
+
 
 const shiftlist = [
   shift_1,
@@ -28,7 +29,8 @@ const shiftlist = [
   shift_2,
   shift_3
 ];
-const ROW_COUNT = 10;
+const ROW_COUNT = 11;
+const COLUMN_COUNT = 15;
 const STYLE = {
   border: "1px solid #ddd",
   paddingTop: "10px"
@@ -72,24 +74,17 @@ class Schedule extends Component {
   }
 
   _cellRenderer({ columnIndex, key, rowIndex, style }) {
-    const data = this.state.data;
-    // console.log("cellrender:"+data);
+    const peoplelist = this.state.data;
+    const shiftTable = this.state.table;
+  //  const employee = peoplelist[rowIndex-1];
     return (
      
       <div className={styles.Cell} key={key} style={style}>
-        {columnIndex === 0 && rowIndex !== 0 && data && (
-          // <div>person:{rowIndex}: {peoplelist[rowIndex]}</div>
-          // <EmployeeDialog  rowIndex={rowIndex} name= {names[rowIndex]}/>
-          // <div>{data[rowIndex-1].name},{data[rowIndex-1].name}</div>
-          < EmployeeDialog employee ={data[rowIndex-1]}/>
+        {columnIndex === 0 && rowIndex !== 0 && peoplelist && (
+          < EmployeeDialog employee ={peoplelist[rowIndex-1]}/>
         )}
 
-       {/* {columnIndex === 0 && rowIndex !== 0 && data && data.length<10 &&(
-          // <div>person:{rowIndex}: {peoplelist[rowIndex]}</div>
-          // <EmployeeDialog  rowIndex={rowIndex} name= {names[rowIndex]}/>
-          <div>{rowIndex}</div>
-        )}   */}
-        {/* todo:date */}
+        
         {rowIndex === 0 && columnIndex !== 0 && (
           <div>
             {moment()
@@ -98,10 +93,17 @@ class Schedule extends Component {
           </div>
         )}
          {/* todo:shifts combine with people */}
+          
+         {rowIndex !== 0 && columnIndex !== 0 && peoplelist && peoplelist[rowIndex-1].shifts.length && shiftTable && (
+          // <ShiftBlock shift={shiftlist[rowIndex]} />    
+        //  <div> {`${moment(peoplelist[rowIndex-1].shifts[0].startTime).format("h:mm:ss a")} - ${moment(peoplelist[rowIndex-1].shifts[0].endTime).format("h:mm:ss a")}`}</div>
+        // <div>{`${peoplelist[rowIndex-1].name} have ${peoplelist[rowIndex-1].shifts.length} shifts`}</div>
+        <div>{shiftTable[rowIndex-1][columnIndex].shift_id}</div>
+        )}
         
         {rowIndex !== 0 && columnIndex !== 0 && (
           // <ShiftBlock shift={shiftlist[rowIndex]} />
-         <div> {rowIndex},{columnIndex}</div>
+         <div>{columnIndex}</div>
         )}
       </div>
     );
@@ -123,7 +125,9 @@ class Schedule extends Component {
       .then(res => {
         const data = res.data;
         this.setState({data: data});
-        this.setState({rowCount: data.length })
+
+        // this.fetchShifts();
+        this.fetchShiftsTable();
       })
       .catch(err => {
         console.warn("fetchPeopleErrpr", err);
@@ -131,6 +135,50 @@ class Schedule extends Component {
   };
 
 
+  fetchShiftsTable = async () => {
+   
+    const table = new Array();
+
+    for(let i = 0; i < ROW_COUNT-1; i++){
+      table[i] = new Array();
+      //people left row
+      const person = this.state.data[i];
+      for(let j = 0; j< COLUMN_COUNT-1; j++){
+        //calendar top
+        const cal = moment().add(j-1,"day").format("ll");
+
+        table[i][j] = {
+          people_id: person._id,
+          date: cal
+        }
+
+        for(let k = 0; k <  person.shifts.length;k ++){
+          //shifts' list
+          if (moment(person.shifts[k].startTime).format("ll") === cal ){
+          
+            const startTime = person.shifts[k].startTime;
+            const endTime = person.shifts[k].endTime;
+            const people_id = person._id;
+            const shift_id = person.shifts[k]._id;
+            const date = moment(startTime).format("ll");
+            const start = moment(startTime).format("HH:mm:ss");
+            const end = moment(endTime).format("HH:mm:ss");
+          
+            table[i][j] = {
+               people_id: people_id,
+               shift_id: shift_id,
+               date: date,
+               start:start,
+               end: end  
+            }
+          } 
+        }        
+        console.log("table:"+JSON.stringify(table[i][j]));
+      }
+    }
+
+    this.setState({table:table});
+  }
   render() {
 
     return (
@@ -141,12 +189,12 @@ class Schedule extends Component {
             {...this.state}
             cellRenderer={this._cellRenderer}
             columnWidth={230}
-            columnCount={15}
+            columnCount={COLUMN_COUNT}
             enableFixedColumnScroll
             enableFixedRowScroll
             height={650}
             rowHeight={80}
-            rowCount={5}
+            rowCount={ROW_COUNT}
             style={STYLE}
             styleBottomLeftGrid={STYLE_BOTTOM_LEFT_GRID}
             styleTopLeftGrid={STYLE_TOP_LEFT_GRID}
@@ -160,10 +208,11 @@ class Schedule extends Component {
     );
   }
 
+   
   
-componentDidMount(){
-  this.fetchPeople();
-}
+  componentDidMount(){
+    this.fetchPeople();
+  }
   
 }
 
