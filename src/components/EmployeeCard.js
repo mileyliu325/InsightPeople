@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import EmployeeItem from "./EmployeeItem";
 import EmployeeShiftItem from "./EmployeeShiftItem";
+import moment from "moment";
 class EmployeeCard extends Component {
   constructor(props) {
     super();
@@ -15,45 +16,64 @@ class EmployeeCard extends Component {
           <Container>
             <CardContainer>
               <h4>CONTACT</h4>
-              <EmployeeItem icon={"phone_iphone"} content={"Add Mobile"} />
-              <EmployeeItem icon={"email"} content={"Add Email"} />
+              <EmployeeItem
+                icon={"phone_iphone"}
+                content={
+                  this.props.person.phone
+                    ? this.props.person.phone
+                    : "Add Mobile"
+                }
+              />
+              <EmployeeItem
+                icon={"email"}
+                content={
+                  this.props.person.email
+                    ? this.props.person.email
+                    : "Add Email"
+                }
+              />
             </CardContainer>
             <CardContainer>
               <h4>ADDRESS</h4>
               <EmployeeItem
                 icon={"add_location"}
-                content={"Add Main Address"}
+                content={
+                  this.props.person.location
+                    ? this.props.person.location
+                    : "Add Main Address"
+                }
               />
             </CardContainer>
             <CardContainer>
               <h4>OTHER</h4>
-              <EmployeeItem icon={"calendar_today"} content={"Add Birthday"} />
+              <EmployeeItem
+                icon={"calendar_today"}
+                content={
+                  this.props.person.birthday
+                    ? moment(this.props.person.birthday).format("ll")
+                    : "Add Birthday"
+                }
+              />
             </CardContainer>
           </Container>
         )}
-        {type === "shifts" && (
+
+        {type === "shift" && <button>Add shift</button>}
+
+        {type === "shifts" && this.props.person.shifts.length && (
           <Container>
-            <CardContainer>
-              <EmployeeShiftItem
-                date={"Tue 19 Feb"}
-                time={"9am-5.30"}
-                location={"at office"}
-              />
-            </CardContainer>
-            <CardContainer>
-              <EmployeeShiftItem
-                date={"Tue 18 Feb"}
-                time={"9am-5.30"}
-                location={"at office"}
-              />
-            </CardContainer>
-            <CardContainer>
-              <EmployeeShiftItem
-                date={"Tue 17 Feb"}
-                time={"9am-5.30"}
-                location={"at office"}
-              />
-            </CardContainer>
+            {this.props.person.shifts.map((shift, id) => (
+              <CardContainer>
+                <EmployeeShiftItem
+                  key={id}
+                  date={moment(shift.startTime).format("ll")}
+                  time={`${moment(shift.startTime).format("HH:mm")}-${moment(
+                    shift.endTime
+                  ).format("HH:mm")}`}
+                  area={shift.area}
+                />
+              </CardContainer>
+            ))}
           </Container>
         )}
       </div>

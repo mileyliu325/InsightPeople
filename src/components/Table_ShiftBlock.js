@@ -34,7 +34,6 @@ class Table_ShiftBlock extends React.Component {
       content = (
         <div className="shift_block">
           <span>{schedule.start + " - " + schedule.end}</span>
-          <span>{schedule.task}</span>
           {/* <TitleTag title={schedule.task} /> */}
           <div className="edit_button" id="schedule" onClick={this.handleClick}>
             <Fab color="secondary" aria-label="Edit" size="small">

@@ -117,6 +117,7 @@ class Schedule extends Component {
 
         table[i][j] = {
           people_id: person._id,
+          people: person,
           date: cal
         }
 

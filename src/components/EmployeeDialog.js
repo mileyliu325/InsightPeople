@@ -95,8 +95,20 @@ class EmployeeDialog extends Component {
                           Save
                         </Button>
                       )}
+                      {this.state.value === "shifts" && (
+                        <Button
+                          variant="contained"
+                          size="small"
+                          color="primary"
+                        >
+                          Add Shift
+                        </Button>
+                      )}
                     </TitleContainer>
-                    <EmployeeCard type={this.state.value} />
+                    <EmployeeCard
+                      type={this.state.value}
+                      person={this.props.employee}
+                    />
                   </DetailContainer>
                 </DialogContanier>
               }
