@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { people_1, people_2, people_3 } from '../mockdata/people'
 import { shift_1, shift_2, shift_3 } from '../mockdata/shift'
 
-import Table_PeopleBlock from '../components/Table_PeopleBlock'
-import Table_ShiftBlock from '../components/Table_ShiftBlock'
+import Table_PeopleBlock from '../components/schedule/Table_PeopleBlock'
+import Table_ShiftBlock from '../components/schedule/Table_ShiftBlock'
 
 class Setting extends Component {
     render() {

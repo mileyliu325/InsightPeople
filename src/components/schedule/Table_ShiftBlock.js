@@ -8,7 +8,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 
-import TitleTag from "./TitleTag";
+import TitleTag from "../TitleTag";
 import Table_ShiftDialog from "./Table_ShiftDialog";
 
 import "./Table_ShiftBlock.css";
@@ -34,6 +34,7 @@ class Table_ShiftBlock extends React.Component {
       content = (
         <div className="shift_block">
           <span>{schedule.start + " - " + schedule.end}</span>
+          <span>{schedule.task}</span>
           {/* <TitleTag title={schedule.task} /> */}
           <div className="edit_button" id="schedule" onClick={this.handleClick}>
             <Fab color="secondary" aria-label="Edit" size="small">

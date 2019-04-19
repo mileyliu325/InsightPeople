@@ -10,7 +10,7 @@ import {
 import PrivateRoute from "../components/PrivateRoute";
 import NavBar from "../components/NavBar";
 import Setting from "../pages/Setting.jsx";
-import Schedule from "../pages/Schedule.jsx";
+import Schedule from "../pages/SchedulePage.jsx";
 import Leave from "./Leave";
 import SignIn from "../pages/SignInPage";
 import Approval from "./Approval";

@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import EmployeeSummary from "./EmployeeSummary";
 import EmployeeCard from "./EmployeeCard";
-import PeopleBlock from "../components/Table_PeopleBlock";
+import PeopleBlock from "./Table_PeopleBlock";
 
 class EmployeeDialog extends Component {
   constructor(props) {
