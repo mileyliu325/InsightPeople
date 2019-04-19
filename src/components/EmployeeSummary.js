@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import Avatar from "@material-ui/core/Avatar";
 class EmployeeSummary extends Component {
   constructor(props) {
     super();
     this.state = {};
-    console.log("avatar" + props.avatar);
   }
   render() {
     return (
       <Container>
         <AvatarContainer>
-          <img className="portrait" src={this.props.avatar} alt="" />
+          <Avatar>{this.props.name[0]}</Avatar>
         </AvatarContainer>
         <NameContanier>
           <h2>{this.props.name}</h2>

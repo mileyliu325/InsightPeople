@@ -7,30 +7,12 @@ import EmployeeDialog from "../components/EmployeeDialog";
 import ShiftBlock from "../components/Table_ShiftBlock";
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 import moment from "moment";
-// import List from 'react-virtualized/dist/commonjs/List';
-
-import { shift_1, shift_2, shift_3 } from "../mockdata/shift";
 import { array } from "prop-types";
 const HOST = "http://127.0.0.1:3002/bulk/users";
-
-
-
-const shiftlist = [
-  shift_1,
-  shift_2,
-  shift_3,
-  shift_1,
-  shift_2,
-  shift_3,
-  shift_1,
-  shift_2,
-  shift_3,
-  shift_1,
-  shift_2,
-  shift_3
-];
+//todo: resize count
 const ROW_COUNT = 11;
 const COLUMN_COUNT = 15;
+
 const STYLE = {
   border: "1px solid #ddd",
   paddingTop: "10px"
@@ -48,12 +30,8 @@ const STYLE_TOP_RIGHT_GRID = {
   borderBottom: "2px solid #aaa",
   fontWeight: "bold"
 };
-
-
 class Schedule extends Component {
-  // static contextTypes = {
-  //   list: PropTypes.instanceOf(Immutable.List).isRequired,
-  // };
+  
   constructor(props, context) {
     super(props, context);
     
@@ -76,15 +54,15 @@ class Schedule extends Component {
   _cellRenderer({ columnIndex, key, rowIndex, style }) {
     const peoplelist = this.state.data;
     const shiftTable = this.state.table;
-  //  const employee = peoplelist[rowIndex-1];
+
     return (
      
       <div className={styles.Cell} key={key} style={style}>
+       {/* left column - employee list*/}
         {columnIndex === 0 && rowIndex !== 0 && peoplelist && (
           < EmployeeDialog employee ={peoplelist[rowIndex-1]}/>
         )}
-
-        
+        {/* top row - dates */}
         {rowIndex === 0 && columnIndex !== 0 && (
           <div>
             {moment()
@@ -92,18 +70,9 @@ class Schedule extends Component {
               .format("ll")}
           </div>
         )}
-         {/* todo:shifts combine with people */}
-          
-         {rowIndex !== 0 && columnIndex !== 0 && peoplelist && peoplelist[rowIndex-1].shifts.length && shiftTable && (
-          // <ShiftBlock shift={shiftlist[rowIndex]} />    
-        //  <div> {`${moment(peoplelist[rowIndex-1].shifts[0].startTime).format("h:mm:ss a")} - ${moment(peoplelist[rowIndex-1].shifts[0].endTime).format("h:mm:ss a")}`}</div>
-        // <div>{`${peoplelist[rowIndex-1].name} have ${peoplelist[rowIndex-1].shifts.length} shifts`}</div>
-        <div>{shiftTable[rowIndex-1][columnIndex].shift_id}</div>
-        )}
-        
-        {rowIndex !== 0 && columnIndex !== 0 && (
-          // <ShiftBlock shift={shiftlist[rowIndex]} />
-         <div>{columnIndex}</div>
+         {/* shifttable - two demision array from [1,1]  */}
+         {rowIndex !== 0 && columnIndex !== 0 && peoplelist && shiftTable && (
+        <ShiftBlock shift={shiftTable[rowIndex-1][columnIndex]} />
         )}
       </div>
     );
@@ -111,7 +80,6 @@ class Schedule extends Component {
   _createEventHandler(property) {
     return event => {
       const value = parseInt(event.target.value, 10) || 0;
-
       this.setState({
         [property]: value
       });
@@ -119,14 +87,13 @@ class Schedule extends Component {
   }
 
   fetchPeople = async () => {
+    //TODO: add auth permission 
     console.log("fetchdata....");
     axios
       .get("http://127.0.0.1:3002/bulk/users")
       .then(res => {
         const data = res.data;
         this.setState({data: data});
-
-        // this.fetchShifts();
         this.fetchShiftsTable();
       })
       .catch(err => {
@@ -134,6 +101,7 @@ class Schedule extends Component {
       });
   };
 
+ //todo:optimize alogrithm
 
   fetchShiftsTable = async () => {
    
@@ -158,22 +126,23 @@ class Schedule extends Component {
           
             const startTime = person.shifts[k].startTime;
             const endTime = person.shifts[k].endTime;
-            const people_id = person._id;
             const shift_id = person.shifts[k]._id;
             const date = moment(startTime).format("ll");
-            const start = moment(startTime).format("HH:mm:ss");
-            const end = moment(endTime).format("HH:mm:ss");
+            const start = moment(startTime).format("HH:mm");
+            const end = moment(endTime).format("HH:mm");
+            const area = person.shifts[k].area;
           
             table[i][j] = {
-               people_id: people_id,
+               people: person,
                shift_id: shift_id,
                date: date,
                start:start,
+               task: area,
                end: end  
             }
           } 
         }        
-        console.log("table:"+JSON.stringify(table[i][j]));
+        // console.log("table:"+JSON.stringify(table[i][j]));
       }
     }
 
@@ -207,13 +176,8 @@ class Schedule extends Component {
       </AutoSizer>
     );
   }
-
-   
-  
   componentDidMount(){
     this.fetchPeople();
-  }
-  
+  } 
 }
-
 export default Schedule;

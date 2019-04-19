@@ -57,7 +57,7 @@ class EmployeeDialog extends Component {
                   <SummaryContainer>
                     <EmployeeSummary
                       name={this.props.employee.name}
-                      position={"Sales Manager"}
+                      position={this.props.employee.role}
                       // avatar={employee.portrait}
                     />
                     <LeftNavContainer>
