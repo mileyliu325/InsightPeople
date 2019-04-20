@@ -3,32 +3,16 @@ import styled from "styled-components";
 import axios from 'axios';
 import styles from "react-virtualized/styles.css";
 import { Column, Table, MultiGrid } from "react-virtualized";
-import EmployeeDialog from "../components/EmployeeDialog";
-import ShiftBlock from "../components/Table_ShiftBlock";
+import EmployeeDialog from "../components/schedule/EmployeeDialog";
+import ShiftBlock from "../components/schedule/Table_ShiftBlock";
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 import moment from "moment";
-// import List from 'react-virtualized/dist/commonjs/List';
-
-import { shift_1, shift_2, shift_3 } from "../mockdata/shift";
+import { array } from "prop-types";
 const HOST = "http://127.0.0.1:3002/bulk/users";
+//todo: resize count
+const ROW_COUNT = 11;
+const COLUMN_COUNT = 15;
 
-const names = [];
-
-const shiftlist = [
-  shift_1,
-  shift_2,
-  shift_3,
-  shift_1,
-  shift_2,
-  shift_3,
-  shift_1,
-  shift_2,
-  shift_3,
-  shift_1,
-  shift_2,
-  shift_3
-];
-const ROW_COUNT = 10;
 const STYLE = {
   border: "1px solid #ddd",
   paddingTop: "10px"
@@ -46,12 +30,8 @@ const STYLE_TOP_RIGHT_GRID = {
   borderBottom: "2px solid #aaa",
   fontWeight: "bold"
 };
-
-
 class Schedule extends Component {
-  // static contextTypes = {
-  //   list: PropTypes.instanceOf(Immutable.List).isRequired,
-  // };
+  
   constructor(props, context) {
     super(props, context);
     
@@ -72,24 +52,17 @@ class Schedule extends Component {
   }
 
   _cellRenderer({ columnIndex, key, rowIndex, style }) {
-    const data = this.state.data;
-    // console.log("cellrender:"+data);
+    const peoplelist = this.state.data;
+    const shiftTable = this.state.table;
+
     return (
      
       <div className={styles.Cell} key={key} style={style}>
-        {columnIndex === 0 && rowIndex !== 0 && data && (
-          // <div>person:{rowIndex}: {peoplelist[rowIndex]}</div>
-          // <EmployeeDialog  rowIndex={rowIndex} name= {names[rowIndex]}/>
-          // <div>{data[rowIndex-1].name},{data[rowIndex-1].name}</div>
-          < EmployeeDialog employee ={data[rowIndex-1]}/>
+       {/* left column - employee list*/}
+        {columnIndex === 0 && rowIndex !== 0 && peoplelist && (
+          < EmployeeDialog employee ={peoplelist[rowIndex-1]}/>
         )}
-
-       {/* {columnIndex === 0 && rowIndex !== 0 && data && data.length<10 &&(
-          // <div>person:{rowIndex}: {peoplelist[rowIndex]}</div>
-          // <EmployeeDialog  rowIndex={rowIndex} name= {names[rowIndex]}/>
-          <div>{rowIndex}</div>
-        )}   */}
-        {/* todo:date */}
+        {/* top row - dates */}
         {rowIndex === 0 && columnIndex !== 0 && (
           <div>
             {moment()
@@ -97,11 +70,9 @@ class Schedule extends Component {
               .format("ll")}
           </div>
         )}
-         {/* todo:shifts combine with people */}
-        
-        {rowIndex !== 0 && columnIndex !== 0 && (
-          // <ShiftBlock shift={shiftlist[rowIndex]} />
-         <div> {rowIndex},{columnIndex}</div>
+         {/* shifttable - two demision array from [1,1]  */}
+         {rowIndex !== 0 && columnIndex !== 0 && peoplelist && shiftTable && (
+        <ShiftBlock shift={shiftTable[rowIndex-1][columnIndex]} />
         )}
       </div>
     );
@@ -109,7 +80,6 @@ class Schedule extends Component {
   _createEventHandler(property) {
     return event => {
       const value = parseInt(event.target.value, 10) || 0;
-
       this.setState({
         [property]: value
       });
@@ -117,20 +87,68 @@ class Schedule extends Component {
   }
 
   fetchPeople = async () => {
+    //TODO: add auth permission 
     console.log("fetchdata....");
     axios
       .get("http://127.0.0.1:3002/bulk/users")
       .then(res => {
         const data = res.data;
         this.setState({data: data});
-        this.setState({rowCount: data.length })
+        this.fetchShiftsTable();
       })
       .catch(err => {
         console.warn("fetchPeopleErrpr", err);
       });
   };
 
+ //todo:optimize alogrithm
 
+  fetchShiftsTable = async () => {
+   
+    const table = new Array();
+
+    for(let i = 0; i < ROW_COUNT-1; i++){
+      table[i] = new Array();
+      //people left row
+      const person = this.state.data[i];
+      for(let j = 0; j< COLUMN_COUNT-1; j++){
+        //calendar top
+        const cal = moment().add(j-1,"day").format("ll");
+
+        table[i][j] = {
+          people_id: person._id,
+          people: person,
+          date: cal
+        }
+
+        for(let k = 0; k <  person.shifts.length;k ++){
+          //shifts' list
+          if (moment(person.shifts[k].startTime).format("ll") === cal ){
+          
+            const startTime = person.shifts[k].startTime;
+            const endTime = person.shifts[k].endTime;
+            const shift_id = person.shifts[k]._id;
+            const date = moment(startTime).format("ll");
+            const start = moment(startTime).format("HH:mm");
+            const end = moment(endTime).format("HH:mm");
+            const area = person.shifts[k].area;
+          
+            table[i][j] = {
+               people: person,
+               shift_id: shift_id,
+               date: date,
+               start:start,
+               task: area,
+               end: end  
+            }
+          } 
+        }        
+        // console.log("table:"+JSON.stringify(table[i][j]));
+      }
+    }
+
+    this.setState({table:table});
+  }
   render() {
 
     return (
@@ -141,12 +159,12 @@ class Schedule extends Component {
             {...this.state}
             cellRenderer={this._cellRenderer}
             columnWidth={230}
-            columnCount={15}
+            columnCount={COLUMN_COUNT}
             enableFixedColumnScroll
             enableFixedRowScroll
             height={650}
             rowHeight={80}
-            rowCount={5}
+            rowCount={ROW_COUNT}
             style={STYLE}
             styleBottomLeftGrid={STYLE_BOTTOM_LEFT_GRID}
             styleTopLeftGrid={STYLE_TOP_LEFT_GRID}
@@ -159,12 +177,8 @@ class Schedule extends Component {
       </AutoSizer>
     );
   }
-
-  
-componentDidMount(){
-  this.fetchPeople();
+  componentDidMount(){
+    this.fetchPeople();
+  } 
 }
-  
-}
-
 export default Schedule;

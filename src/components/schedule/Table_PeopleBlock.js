@@ -9,10 +9,15 @@ class TableComponent_people extends React.Component {
         <div className="portrait">
           <Avatar>{this.props.people.name[0]}</Avatar>
         </div>
+
         <div className="info_block">
           <span className="name_span">{this.props.people.name}</span>
+
           <span>
-            {this.props.people.hours}Hrs/${this.props.people.cost}
+            {this.props.people.workinghours
+              ? this.props.people.workinghours
+              : 0}
+            Hrs/${this.props.people.wage ? this.props.people.wage : 0}
           </span>
         </div>
       </div>

@@ -12,13 +12,12 @@ import {
 } from "@material-ui/core";
 import EmployeeSummary from "./EmployeeSummary";
 import EmployeeCard from "./EmployeeCard";
-import PeopleBlock from "../components/Table_PeopleBlock";
+import PeopleBlock from "./Table_PeopleBlock";
 
 class EmployeeDialog extends Component {
   constructor(props) {
     super(props);
     this.state = { value: "detail" };
-    // this.setState({ data: props.employee });
     console.log("propsname:" + props.employee);
   }
   state = {
@@ -30,19 +29,7 @@ class EmployeeDialog extends Component {
   handleChange = event => {
     this.setState({ value: event.target.value });
   };
-
   render() {
-    // const index = this.props.rowIndex;
-    // const people = peoplelist[index];
-
-    // const employee = {
-    //   people_id: "0001",
-    //   name: "Putin",
-
-    //   hours: "30",
-    //   cost: "500.00"
-    // };
-
     return (
       <div>
         {this.props.employee && this.props.employee.name && (
@@ -70,7 +57,7 @@ class EmployeeDialog extends Component {
                   <SummaryContainer>
                     <EmployeeSummary
                       name={this.props.employee.name}
-                      position={"Sales Manager"}
+                      position={this.props.employee.role}
                       // avatar={employee.portrait}
                     />
                     <LeftNavContainer>
@@ -108,8 +95,20 @@ class EmployeeDialog extends Component {
                           Save
                         </Button>
                       )}
+                      {this.state.value === "shifts" && (
+                        <Button
+                          variant="contained"
+                          size="small"
+                          color="primary"
+                        >
+                          Add Shift
+                        </Button>
+                      )}
                     </TitleContainer>
-                    <EmployeeCard type={this.state.value} />
+                    <EmployeeCard
+                      type={this.state.value}
+                      person={this.props.employee}
+                    />
                   </DetailContainer>
                 </DialogContanier>
               }

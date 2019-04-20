@@ -13,6 +13,7 @@ class EmployeeShiftItem extends Component {
     const date = this.props.date;
     const time = this.props.time;
     const location = this.props.location;
+    const area = this.props.area;
     return (
       <Container>
         <DateContainer>
@@ -22,6 +23,7 @@ class EmployeeShiftItem extends Component {
           <p>{date}</p>
         </DateContainer>
         <p>{time}</p>
+        <p>{area}</p>
         <p>{location}</p>
       </Container>
     );
