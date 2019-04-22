@@ -62,10 +62,10 @@ class EmployeeCard extends Component {
 
         {type === "shifts" && this.props.person.shifts.length && (
           <Container>
-            {this.props.person.shifts.map((shift, id) => (
+            {this.props.person.shifts.map((shift, shift_id) => (
               <CardContainer>
                 <EmployeeShiftItem
-                  key={id}
+                  key={shift_id}
                   date={moment(shift.startTime).format("ll")}
                   time={`${moment(shift.startTime).format("HH:mm")}-${moment(
                     shift.endTime

@@ -128,15 +128,15 @@ class Schedule extends Component {
             const startTime = person.shifts[k].startTime;
             const endTime = person.shifts[k].endTime;
             const shift_id = person.shifts[k]._id;
-            const date = moment(startTime).format("ll");
             const start = moment(startTime).format("HH:mm");
             const end = moment(endTime).format("HH:mm");
             const area = person.shifts[k].area;
           
             table[i][j] = {
+               people_id:person._id,
                people: person,
                shift_id: shift_id,
-               date: date,
+               date: cal,
                start:start,
                task: area,
                end: end  
