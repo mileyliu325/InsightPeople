@@ -20,24 +20,21 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: 200
   }
-  // button: {
-  //   display: "block",
-  //   marginTop: theme.spacing.unit * 2
-  // },
-  // formControl: {
-  //   margin: theme.spacing.unit
-  //   // minWidth: 300
-  // }
 });
 
 class Table_ShiftDialog extends React.Component {
   state = {
     task: "",
-    open: false
+    open: false,
+    start: this.props.shift.start ? this.props.shift.start : "07:30",
+    end: this.props.shift.end ? this.props.shift.end : "09:30"
   };
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  // handleChange = event => {
+  //   console.log(
+  //     `shiftdialog handlechange:${event.target.name}:${event.target.value}`
+  //   );
+  //   this.setState({ [event.target.name]: event.target.value });
+  // };
 
   handleClose = () => {
     this.setState({ open: false });
@@ -53,9 +50,8 @@ class Table_ShiftDialog extends React.Component {
         {this.props.shift.people && (
           <Table_PeopleBlock people={this.props.shift.people} />
         )}
-        {console.log(this.props.shift.people_id + "," + this.props.shift.date)}
 
-        {/* <TextField id="title" label="title" fullWidth={true} /> */}
+        {/* task list */}
 
         <form autoComplete="off" fullWidth={true}>
           <Button onClick={this.handleOpen}>Open the select</Button>
@@ -66,11 +62,12 @@ class Table_ShiftDialog extends React.Component {
               onClose={this.handleClose}
               onOpen={this.handleOpen}
               value={this.state.task}
-              onChange={this.handleChange}
+              onChange={this.props.handleChange}
               inputProps={{
                 name: "task",
                 id: "demo-controlled-open-select"
               }}
+              // onChange={this.props.handleSelect}cccf
             >
               <MenuItem value="">
                 <em>None</em>
@@ -80,9 +77,6 @@ class Table_ShiftDialog extends React.Component {
                 this.state.data.map(task => (
                   <MenuItem value={task._id}>{task.title}</MenuItem>
                 ))}
-
-              {/* <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
         </form>
@@ -91,37 +85,37 @@ class Table_ShiftDialog extends React.Component {
           id="start_time"
           label="start time"
           type="time"
-          defaultValue={
-            this.props.shift.start ? this.props.shift.start : "07:30"
-          }
+          defaultValue={this.state.start}
           className={styles.textField}
           InputLabelProps={{
             shrink: true
           }}
           inputProps={{
+            name: "start",
             step: 300 // 5 min
           }}
-          onChange={this.combineData}
           fullWidth={true}
+          onChange={this.props.handleChange}
         />
         <TextField
           id="end_time"
           label="end time"
           type="time"
-          defaultValue={this.props.shift.end ? this.props.shift.end : "07:30"}
+          defaultValue={this.state.end}
           className={styles.textField}
           InputLabelProps={{
             shrink: true
           }}
           inputProps={{
+            name: "end",
             step: 300 // 5 min
           }}
           fullWidth={true}
+          onChange={this.props.handleChange}
         />
       </div>
     );
   }
-
   componentDidMount() {
     this.fetchTasks();
   }
@@ -134,13 +128,14 @@ class Table_ShiftDialog extends React.Component {
       .get("http://127.0.0.1:3002/bulk/tasks")
       .then(res => {
         const data = res.data;
-        console.log(data);
+
         this.setState({ data: data });
       })
       .catch(err => {
         console.warn("fetchTaskErrpr", err);
       });
   };
+
   // componentDidUpdate(){
   //   const date = this.props.date;
   //   const startTime = this.state.startTime;

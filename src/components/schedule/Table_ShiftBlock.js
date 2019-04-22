@@ -16,16 +16,32 @@ class Table_ShiftBlock extends React.Component {
   constructor() {
     super();
     this.state = {
-      dialogFlag: false
+      dialogFlag: false,
+      task_id: ""
     };
   }
 
   handleClick = e => {
     const eventId = e.currentTarget.id;
+    if (eventId === "save") {
+      console.log();
+      //todo: fetch database
+    }
     eventId === "schedule" && this.setState({ dialogFlag: true });
     eventId === "save" && this.setState({ dialogFlag: false });
     eventId === "cancel" && this.setState({ dialogFlag: false });
   };
+
+  handleChange = event => {
+    console.log(
+      `shiftdialog handlechange:${event.target.name}:${event.target.value}`
+    );
+    this.setState({ [event.target.name]: event.target.value });
+  };
+  // handelSelect = e => {
+  //   console.log("task id changed:" + e.target.value);
+  //   this.setState({ task_id: e.target.value });
+  // };
 
   render_selector = () => {
     let content = null;
@@ -66,7 +82,10 @@ class Table_ShiftBlock extends React.Component {
         <Dialog id="dialogNotice" open={this.state.dialogFlag}>
           <DialogTitle>Shift Schedule</DialogTitle>
           <DialogContent>
-            <Table_ShiftDialog shift={this.props.shift} />
+            <Table_ShiftDialog
+              shift={this.props.shift}
+              handleChange={this.handleChange}
+            />
           </DialogContent>
           <DialogActions>
             <Button id="save" onClick={this.handleClick} color="primary">
