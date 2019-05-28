@@ -17,12 +17,10 @@ import PeopleBlock from "./Table_PeopleBlock";
 class EmployeeDialog extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: "detail" };
+    this.state = { value: "detail",
+  open: false };
     console.log("propsname:" + props.employee);
   }
-  state = {
-    open: false
-  };
   handleClose = () => {
     this.setState({ open: false });
   };
