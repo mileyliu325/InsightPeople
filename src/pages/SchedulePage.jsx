@@ -10,7 +10,7 @@ import moment from "moment";
 import { array } from "prop-types";
 const HOST = "http://127.0.0.1:3002/bulk/users";
 //todo: resize count
-const ROW_COUNT = 11;
+const ROW_COUNT = 3;
 const COLUMN_COUNT = 15;
 
 const STYLE = {
@@ -93,9 +93,10 @@ class Schedule extends Component {
       .get("http://127.0.0.1:3002/bulk/users")
       .then(res => {
         const data = res.data;
-        this.setState({data: data});
-        this.fetchShiftsTable();
-      })
+        this.setState({data: data}, () => {
+          this.fetchShiftsTable()
+          });
+      }) 
       .catch(err => {
         console.warn("fetchPeopleErrpr", err);
       });
@@ -103,7 +104,7 @@ class Schedule extends Component {
 
  //todo:optimize alogrithm
 
-  fetchShiftsTable = async () => {
+ fetchShiftsTable = async () => {
    
     const table = new Array();
 
